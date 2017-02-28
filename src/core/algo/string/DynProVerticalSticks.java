@@ -18,19 +18,25 @@ public class DynProVerticalSticks {
             return arr.length - i + sum(Arrays.copyOf(arr, arr.length - 1));
     }
     
-    private static void avgArr(int[] arr, int left, int right) {
-        //double s = sum(arr);
-        //System.out.println(s);
-        //arr[0] and arr[1] until end
-    	if (right > left)
-    		return;
-        if (right > arr.length -1) {
-        	int tmp = arr[1];
-        	arr[1] = arr[0];
-        	arr[0] = tmp;
-        } else {
-        	int[] ar1 = Arrays.copyOfRange(arr, 1, arr.length-1);
+    private static void permute(int[] arr, int k, int acc){
+        for(int i = k; i < arr.length; i++){
+        	int tmp = arr[k];
+        	arr[k] = arr[i];
+        	arr[i] = tmp;
+            permute(arr, k+1, 0);
+            tmp = arr[k];
+        	arr[k] = arr[i];
+        	arr[i] = tmp;
         }
+        if (k == arr.length -1){
+        	Arrays.stream(arr).forEach(System.out::print);
+        	System.out.println();
+        }
+    }
+    
+    private static void avgArr(int[] arr) {
+        int[] data = new int[arr.length];
+        permute(arr, 0, 0);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -42,7 +48,7 @@ public class DynProVerticalSticks {
             int[] arr = new int[noEle];
             for (int i = 0; i < noEle; i++)
                 arr[i] = in.nextInt();
-            //avgArr(arr);
+            avgArr(arr);
         }
     }
 }
